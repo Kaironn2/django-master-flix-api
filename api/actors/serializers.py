@@ -5,8 +5,7 @@ from actors.models import Actor, Nationality
 
 class ActorSerializer(serializers.ModelSerializer):
     nationality = serializers.SlugRelatedField(
-        queryset=Nationality.objects.all(),
-        slug_field='name'
+        queryset=Nationality.objects.all(), slug_field='name'
     )
 
     class Meta:

@@ -14,6 +14,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=8.3.5",
+    "pytest-django>=4.11.1",
     "ruff>=0.11.11",
     "taskipy>=1.14.1",
 ]
@@ -44,5 +45,6 @@ superuser = 'uv run api/manage.py createsuperuser'
 startapp = 'uv run api/manage.py startapp $*'
 
 [tool.pytest.ini_options]
-pythonpath = "."
+pythonpath = "./api"
 addopts = '-p no:warnings'
+DJANGO_SETTINGS_MODULE = 'core.settings'

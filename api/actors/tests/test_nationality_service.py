@@ -1,9 +1,9 @@
 from unittest.mock import patch
 
-from api.actors.services.nationality_service import get_nationalities
+from actors.services.nationality_service import get_nationalities
 
 
-@patch('api.actors.services.nationality_service.requests.get')
+@patch('actors.services.nationality_service.requests.get')
 def test_get_nationalities(mock_get):
     mock_response = mock_get.return_value
     mock_response.status_code = 200
