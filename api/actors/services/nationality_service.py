@@ -12,7 +12,7 @@ def get_nationalities(
 
     if response.status_code == HTTPStatus.OK:
         data = response.json()
-        countries = [country['name']['common'].lower() for country in data]
+        countries = [country['name']['common'] for country in data]
         countries.sort()
 
     if charfield_choices:
