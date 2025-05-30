@@ -11,7 +11,7 @@ def api_client():
 
 @pytest.fixture
 def canada():
-    return Nationality.objects.create(name='canada')
+    return Nationality.objects.create(name='Canada')
 
 
 @pytest.fixture

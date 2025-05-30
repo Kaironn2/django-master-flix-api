@@ -10,7 +10,12 @@ class Movie(models.Model):
     )
     release_date = models.DateField()
     actors = models.ManyToManyField(Actor, related_name='movies')
-    resume = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['release_date']
+        verbose_name = 'Filme'
+        verbose_name_plural = 'Filmes'
