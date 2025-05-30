@@ -35,3 +35,23 @@ def test_retrieve_actor_detail(api_client, actor):
     response = api_client.get(f'/actors/{actor.id}/', format='json')
     assert response.status_code == HTTPStatus.OK
     assert response.data['name'] == 'Johnny Depp'
+
+
+@pytest.mark.django_db
+def test_actor_update(api_client, actor):
+    payload = {
+        'name': 'Johnny Depp Updated',
+        'birthday': '1963-06-09',
+        'nationality': actor.nationality.name,
+    }
+    response = api_client.put(f'/actors/{actor.id}/', payload, format='json')
+    actor.refresh_from_db()
+    assert response.status_code == HTTPStatus.OK
+    assert actor.name == 'Johnny Depp Updated'
+
+
+@pytest.mark.django_db
+def test_actor_delete(api_client, actor):
+    response = api_client.delete(f'/actors/{actor.id}/', format='json')
+    assert response.status_code == HTTPStatus.NO_CONTENT
+    assert not Actor.objects.filter(id=actor.id).exists()
