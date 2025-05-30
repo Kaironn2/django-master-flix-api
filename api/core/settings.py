@@ -24,6 +24,7 @@ INSTALLED_APPS = [
 
     'actors',
     'genres',
+    'movies',
 ]
 
 MIDDLEWARE = [

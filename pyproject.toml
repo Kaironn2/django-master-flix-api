@@ -35,14 +35,13 @@ quote-style = 'single'
 lint = 'ruff check'
 pre_format = 'ruff check --fix'
 format = 'ruff format'
-run = 'uv run api/manage.py runserver'
+run = 'uv run manage.py runserver'
 pre_test = 'task lint'
 test = 'pytest -s -x --cov=app -vv'
 post_test = 'coverage html'
-migrate = 'uv run api/manage.py migrate'
-makemigrations = 'uv run api/manage.py makemigrations'
-superuser = 'uv run api/manage.py createsuperuser'
-startapp = 'uv run api/manage.py startapp $*'
+migrate = 'uv run manage.py migrate'
+makemigrations = 'uv run manage.py makemigrations'
+superuser = 'uv run manage.py createsuperuser'
 
 [tool.pytest.ini_options]
 pythonpath = "./api"
