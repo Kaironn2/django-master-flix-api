@@ -17,7 +17,5 @@ def canada():
 @pytest.fixture
 def actor(canada):
     return Actor.objects.create(
-        name='Johnny Depp',
-        birthday='1963-06-09',
-        nationality=canada
+        name='Johnny Depp', birthday='1963-06-09', nationality=canada
     )

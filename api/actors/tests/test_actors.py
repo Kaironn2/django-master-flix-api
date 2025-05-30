@@ -10,7 +10,7 @@ def test_actor_create(api_client, canada):
     payload = {
         'name': 'Johnny Depp',
         'birthday': '1963-06-09',
-        'nationality': canada.name,
+        'nationality': canada.id,
     }
     response = api_client.post('/actors/', payload, format='json')
     assert response.status_code == HTTPStatus.CREATED
@@ -42,7 +42,7 @@ def test_actor_update(api_client, actor):
     payload = {
         'name': 'Johnny Depp Updated',
         'birthday': '1963-06-09',
-        'nationality': actor.nationality.name,
+        'nationality': actor.nationality.id,
     }
     response = api_client.put(f'/actors/{actor.id}/', payload, format='json')
     actor.refresh_from_db()
