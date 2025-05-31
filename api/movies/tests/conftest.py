@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 import pytest
 from actors.models import Actor, Nationality
 from genres.models import Genre
@@ -9,6 +11,23 @@ from movies.models import Movie
 @pytest.fixture
 def api_client():
     return APIClient()
+
+
+@pytest.fixture
+def future_date():
+    return (date.today() + timedelta(days=30)).isoformat()
+
+
+@pytest.fixture
+def v1_movies_url():
+    return '/api/v1/movies/'
+
+
+@pytest.fixture
+def v1_movies_detail_url():
+    def _url(movie_id):
+        return f'/api/v1/movies/{movie_id}/'
+    return _url
 
 
 @pytest.fixture
