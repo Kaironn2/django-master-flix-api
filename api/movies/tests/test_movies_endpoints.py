@@ -6,9 +6,7 @@ from movies.models import Movie
 
 
 @pytest.mark.django_db
-def test_movie_create(
-    api_client, genre, leonardo_dicaprio, kate_winslet
-):
+def test_movie_create(api_client, genre, leonardo_dicaprio, kate_winslet):
     payload = {
         'title': 'Titanic',
         'release_date': '1997-12-19',

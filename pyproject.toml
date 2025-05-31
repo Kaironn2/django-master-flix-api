@@ -14,6 +14,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
     "pytest-django>=4.11.1",
     "ruff>=0.11.11",
     "taskipy>=1.14.1",
@@ -37,7 +38,7 @@ pre_format = 'ruff check --fix'
 format = 'ruff format'
 run = 'uv run manage.py runserver'
 pre_test = 'task lint'
-test = 'pytest -s -x --cov=app -vv'
+test = 'pytest -s -x --cov=api --cov-report=html -vv'
 post_test = 'coverage html'
 migrate = 'uv run manage.py migrate'
 makemigrations = 'uv run manage.py makemigrations'
@@ -47,3 +48,6 @@ superuser = 'uv run manage.py createsuperuser'
 pythonpath = "./api"
 addopts = '-p no:warnings'
 DJANGO_SETTINGS_MODULE = 'core.settings'
+
+[tool.coverage.run]
+omit = ['*/manage.py', '*/migrations/*']

@@ -3,9 +3,7 @@ from http import HTTPStatus
 import requests
 
 
-def get_nationalities(
-    charfield_choices=False,
-) -> list[str] | list[tuple[str, str]]:
+def get_nationalities() -> list[str]:
     url = 'https://restcountries.com/v3.1/all?fields=name'
     response = requests.get(url)
     response.raise_for_status()
@@ -15,6 +13,4 @@ def get_nationalities(
         countries = [country['name']['common'] for country in data]
         countries.sort()
 
-    if charfield_choices:
-        countries = tuple((country, country) for country in countries)
     return countries

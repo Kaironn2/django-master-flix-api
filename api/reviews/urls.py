@@ -7,13 +7,11 @@ from reviews.views import (
 
 urlpatterns = [
     path(
-        'reviews/',
-        ReviewListCreateView.as_view(),
-        name='review-list-create'
+        'reviews/', ReviewListCreateView.as_view(), name='review-list-create'
     ),
     path(
         'reviews/<int:pk>/',
         ReviewRetrieveUpdateDestroyView.as_view(),
-        name='review-detail'
+        name='review-detail',
     ),
 ]
