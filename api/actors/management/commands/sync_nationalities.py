@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = 'Sync nationalities from external API'
 
     def handle(self, *args, **kwargs):
-        countries = get_nationalities(charfield_choices=False)
+        countries = get_nationalities()
 
         for country in countries:
             Nationality.objects.get_or_create(name=country)

@@ -7,6 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "django>=5.2.1",
     "djangorestframework>=3.16.0",
+    "djangorestframework-simplejwt>=5.5.0",
     "python-decouple>=3.8",
     "requests>=2.32.3",
 ]
@@ -28,6 +29,9 @@ extend-exclude = ['migrations', 'core', 'manage.py']
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
 
+[tool.ruff.lint.ignore]
+PL = ['PLR6301']
+
 [tool.ruff.format]
 preview = true
 quote-style = 'single'
@@ -36,13 +40,13 @@ quote-style = 'single'
 lint = 'ruff check'
 pre_format = 'ruff check --fix'
 format = 'ruff format'
-run = 'uv run manage.py runserver'
+run = 'uv run api/manage.py runserver'
 pre_test = 'task lint'
 test = 'pytest -s -x --cov=api --cov-report=html -vv'
 post_test = 'coverage html'
-migrate = 'uv run manage.py migrate'
-makemigrations = 'uv run manage.py makemigrations'
-superuser = 'uv run manage.py createsuperuser'
+migrate = 'uv run api/manage.py migrate'
+makemigrations = 'uv run api/manage.py makemigrations'
+superuser = 'uv run api/manage.py createsuperuser'
 
 [tool.pytest.ini_options]
 pythonpath = "./api"

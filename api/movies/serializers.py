@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.db.models import Avg
 from rest_framework import serializers
 
 from movies.models import Movie
@@ -13,20 +14,18 @@ class MovieSerializer(serializers.ModelSerializer):
         model = Movie
         fields = '__all__'
 
-    def get_rate(self, obj: Movie):     # noqa: PLR6301
-        reviews = obj.reviews.all()
-        if not reviews:
-            return None
-        return sum(review.stars for review in reviews) / len(reviews)
+    def get_rate(self, obj: Movie):
+        rate = obj.reviews.aggregate(Avg('stars'))['stars__avg']
+        return round(rate, 1) if rate else None
 
-    def validate_release_date(self, value):     # noqa: PLR6301
+    def validate_release_date(self, value):
         if value > date.today():
             raise serializers.ValidationError(
                 'Release date cannot be in the future.'
             )
         return value
 
-    def validate_description(self, value):   # noqa: PLR6301
+    def validate_description(self, value):
         MIN_LENGTH = 15
         MAX_LENGTH = 500
 
