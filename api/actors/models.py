@@ -24,6 +24,7 @@ class Actor(models.Model):
         return self.name
 
     class Meta:
+        unique_together = ['name', 'birthday', 'nationality']
         ordering = ['name']
         verbose_name = 'Ator'
         verbose_name_plural = 'Atores'

@@ -22,15 +22,13 @@ dev = [
 ]
 
 [tool.ruff]
-line-length = 79
+line-length = 99
 extend-exclude = ['migrations', 'core', 'manage.py']
 
 [tool.ruff.lint]
 preview = true
 select = ['I', 'F', 'E', 'W', 'PL', 'PT']
-
-[tool.ruff.lint.ignore]
-PL = ['PLR6301']
+ignore = ['PLR6301']
 
 [tool.ruff.format]
 preview = true
