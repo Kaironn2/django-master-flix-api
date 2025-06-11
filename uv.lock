@@ -159,9 +159,11 @@ dependencies = [
     { name = "django" },
     { name = "djangorestframework" },
     { name = "djangorestframework-simplejwt" },
+    { name = "pandas" },
     { name = "python-decouple" },
     { name = "requests" },
     { name = "streamlit" },
+    { name = "streamlit-aggrid" },
 ]
 
 [package.dev-dependencies]
@@ -178,9 +180,11 @@ requires-dist = [
     { name = "django", specifier = ">=5.2.1" },
     { name = "djangorestframework", specifier = ">=3.16.0" },
     { name = "djangorestframework-simplejwt", specifier = ">=5.5.0" },
+    { name = "pandas", specifier = ">=2.3.0" },
     { name = "python-decouple", specifier = ">=3.8" },
     { name = "requests", specifier = ">=2.32.3" },
     { name = "streamlit", specifier = ">=1.45.1" },
+    { name = "streamlit-aggrid", specifier = ">=1.1.5.post1" },
 ]
 
 [package.metadata.requires-dev]
@@ -739,6 +743,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/f0/46/9b3f73886f82d27849ce1e7a74ae7c39f5323e46da0b6e8847ad4c25f44c/streamlit-1.45.1.tar.gz", hash = "sha256:e37d56c0af5240dbc240976880e81366689c290a559376417246f9b3f51b4217", size = 9463953, upload-time = "2025-05-12T20:40:30.562Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/13/e6/69fcbae3dd2fcb2f54283a7cbe03c8b944b79997f1b526984f91d4796a02/streamlit-1.45.1-py3-none-any.whl", hash = "sha256:9ab6951585e9444672dd650850f81767b01bba5d87c8dac9bc2e1c859d6cc254", size = 9856294, upload-time = "2025-05-12T20:40:27.875Z" },
+]
+
+[[package]]
+name = "streamlit-aggrid"
+version = "1.1.5.post1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pandas" },
+    { name = "python-decouple" },
+    { name = "streamlit" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/92/29/6c2d0caeff49ce66b7af6b3d1332044fa7724d599f0f621ef77ea867bb2e/streamlit_aggrid-1.1.5.post1.tar.gz", hash = "sha256:d537ad3fa78ffbf345e95f03f700049be787a349eae764c434e01b76eaa031da", size = 4887716, upload-time = "2025-06-02T15:30:53.798Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/ca/76a86d186442c268542e1c182b95737a9d0b2968c0cb286f5d82e4bc07bb/streamlit_aggrid-1.1.5.post1-py3-none-any.whl", hash = "sha256:be298a1f26538d6da7738320e5fb656c12ab3acab90e3318db259aa7cea9ab7d", size = 4940909, upload-time = "2025-06-02T15:30:51.856Z" },
 ]
 
 [[package]]
