@@ -1,14 +1,15 @@
-from http import HTTPStatus
+from http import HTTPStatus  # noqa: I001
 from typing import Any, Dict, Union
 
 import requests
+
+from core.urls import BASE_URL_V1
 
 
 class Auth:
 
     def __init__(self):
-        self._base_url = 'http://127.0.0.1:8000/api/v1/'
-        self._auth_url = f'{self._base_url}authentication/token/'
+        self._auth_url = BASE_URL_V1 + 'authentication/token/'
 
     def get_token(self, username: str, password: str) -> Union[Dict[str, Any]]:
         payload = {

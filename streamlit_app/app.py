@@ -20,7 +20,9 @@ class FlixApp:
             self._is_authenticated()
 
     def _is_not_authenticated(self):
-        ...
+        page = LoginPage()
+        url_path = page.title.lower().replace(' ', '-')
+        st.Page(page.render(), title=page.title, url_path=url_path)
 
     def _is_authenticated(self):
         self._pages()
