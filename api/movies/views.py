@@ -1,4 +1,4 @@
-from http import HTTPStatus
+from http import HTTPStatus  # noqa: I001
 
 from django.db.models import Avg, Count
 from rest_framework import generics, views
@@ -7,8 +7,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from reviews.models import Review
 
+from genres.models import Genre
 from movies.models import Movie
-from movies.serializers import MovieListDetailSerializer, MovieSerializer, MovieStatsSerializer
+from movies.serializers import (
+    MovieListDetailSerializer, MovieSerializer,
+    MovieStatsSerializer, MoviesByGenreSerializer
+)
 
 
 class MovieListCreateView(generics.ListCreateAPIView):
@@ -56,3 +60,8 @@ class MovieStatsView(views.APIView):
             data=serializer.validated_data,
             status=HTTPStatus.OK,
         )
+
+
+class MoviesByGenreListView(generics.ListAPIView):
+    queryset = Genre.objects.prefetch_related('movies').all()
+    serializer_class = MoviesByGenreSerializer

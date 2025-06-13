@@ -1,8 +1,10 @@
+from typing import Dict, List  # noqa: I001
+
 import streamlit as st  # noqa: I001
 
 from core import base_page
-from .texts import GenreTexts
 from .service import GenreService
+from .texts import GenreTexts
 
 
 class GenrePage(base_page.Page):
@@ -18,10 +20,14 @@ class GenrePage(base_page.Page):
         self._genres_list()
 
     def _genres_list(self):
-        for genre in self.existing_genres:
+        for genre, movies in self.existing_genres.items():
             expander = st.expander(genre.title())
-            for i in range(1, 10):
-                expander.info(f'Filme {i}')
+
+            if not movies:
+                expander.info(GenreTexts.warning_inexistent_movie)
+            else:
+                for movie in sorted(movies):
+                    expander.info(movie)
 
     def _genre_register(self):
         col1, col2 = st.columns([0.5, 0.5])
@@ -41,5 +47,16 @@ class GenrePage(base_page.Page):
                     st.rerun()
 
     @property
-    def existing_genres(self):
-        return sorted(self._genre_service.get_genres_names())
+    def existing_genres(self) -> Dict[str, List[str]]:
+        objects = self._genre_service.get_movies_by_genres()
+        genres: Dict[str, List[str]] = {}
+
+        for obj in objects:
+            genre_name = obj['name']
+
+            if genre_name not in genres:
+                genres[genre_name] = []
+
+            for movie in obj['movies']:
+                genres[genre_name].append(movie['title'])
+        return genres

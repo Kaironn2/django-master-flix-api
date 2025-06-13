@@ -7,6 +7,8 @@ class GenreTexts:
 
     place_holder_genre_register = 'Digite o nome do gênero...'
 
+    warning_inexistent_movie = 'Nenhum filme registrado para esse gênero.'
+
     @staticmethod
     def sucess_genre_create(genre_name: str) -> str:
         return f'Gênero {genre_name} cadastrado com sucesso!'
