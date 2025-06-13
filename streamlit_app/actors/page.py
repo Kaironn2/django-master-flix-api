@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import List
 
-import streamlit as st  # noqa: I001
+import streamlit as st
 
 from core import base_page
 from .service import ActorService
 from .texts import ActorTexts
-from .types import NationalityDict
+from .types import ActorDict, NationalityDict
 
 
 class ActorPage(base_page.Page):
@@ -18,19 +18,68 @@ class ActorPage(base_page.Page):
     def render(self):
         st.header(ActorTexts.header)
         st.write(ActorTexts.description)
-        self._actors_list()
+        self._filters()
 
-    def _actors_list(self) -> None:
-        for actor in self._actor_service.get_actors():
-            id = actor['id']
+    def _actors_list(self, actors: List[ActorDict]) -> None:
+        for actor in actors:
             name = actor['name']
             birthday = datetime.strptime(actor['birthday'], '%Y-%m-%d').strftime('%d/%m/%Y')
-            nationality = next(
-                (n['name'] for n in self.nationalities_list if n['id'] == actor['nationality']),
-                'Desconhecida'
+            nationality = actor['nationality_name']
+            st.info(f'{name} - {birthday} - {nationality}')
+
+    def _filters(self):
+        actors = self._actor_service.get_actors()
+        nationality_map = {n['id']: n['name'] for n in self.nationalities}
+
+        for actor in actors:
+            actor['nationality_name'] = nationality_map.get(actor['nationality'], 'Desconhecida')
+
+        col1, col2 = st.columns([0.5, 0.5])
+
+        with col1:
+            actor_name = st.text_input('Ator', placeholder='Digite o nome do ator...')
+        with col2:
+            nationality = st.text_input('Nacionalidade', placeholder='Digite o nome do ator...')
+
+        col_btn1, col_btn2, col_btn3 = st.columns([0.1, 0.1, 0.8])
+
+        with col_btn1:
+            if st.button('Adicionar'):
+                self._create_actor_dialog()
+
+        with col_btn2:
+            if st.button('Filtrar'):
+                filtered_actors = [
+                    actor for actor in actors
+                    if (actor_name.lower() in actor['name'].lower())
+                    and (nationality.lower() in actor['nationality_name'].lower())
+                ]
+                self._actors_list(actors=filtered_actors)
+                return
+
+        self._actors_list(actors=actors)
+
+    @st.dialog('Adicionar ator')
+    def _create_actor_dialog(self):
+        name = st.text_input('Nome do ator', placeholder='Digite o nome do ator...')
+
+        nationality_names = [n['name'] for n in self.nationalities]
+        nationality_name = st.selectbox('Nacionalidade', nationality_names)
+
+        birthday = st.date_input('Data de nascimento', format='DD/MM/YYYY')
+
+        if st.button('Confirmar'):
+            nationality_id = next(
+                (n['id'] for n in self.nationalities if n['name'] == nationality_name), None
             )
-            st.info(f'{id} - {name} - {birthday} - {nationality}')
+            self._actor_service.create_actor(
+                name=name,
+                birthday=birthday.strftime('%Y-%m-%d'),
+                nationality=nationality_id
+            )
+            st.success('Ator criado com sucesso!')
+            st.rerun()
 
     @property
-    def nationalities_list(self) -> List[NationalityDict]:
+    def nationalities(self) -> List[NationalityDict]:
         return self._actor_service.get_nationalities()

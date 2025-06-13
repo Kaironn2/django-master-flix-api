@@ -26,7 +26,7 @@ class ActorRepository(BaseRepository):
         )
 
     def create_actor(self, actor: ActorDict) -> Optional[Any]:
-        response = requests.get(
+        response = requests.post(
             url=self._actors_url,
             headers=self._headers,
             data=actor
