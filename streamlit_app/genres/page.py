@@ -8,18 +8,18 @@ from .texts import GenreTexts
 
 
 class GenrePage(base_page.Page):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self.title = 'Gêneros'
         self._genre_service = GenreService()
 
-    def render(self):
+    def render(self) -> None:
         st.header(GenreTexts.header)
         st.write(GenreTexts.description)
         self._genre_register()
         self._genres_list()
 
-    def _genres_list(self):
+    def _genres_list(self) -> None:
         for genre, movies in self.existing_genres.items():
             expander = st.expander(genre.title())
 
@@ -29,7 +29,7 @@ class GenrePage(base_page.Page):
                 for movie in sorted(movies):
                     expander.info(movie)
 
-    def _genre_register(self):
+    def _genre_register(self) -> None:
         col1, col2 = st.columns([0.5, 0.5])
 
         with col1:

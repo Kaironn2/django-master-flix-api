@@ -1,20 +1,16 @@
 from http import HTTPStatus  # noqa: I001
 
 import requests  # noqa: I001
-import streamlit as st  # noqa: I001
 
 from core.base_repository import BaseRepository
-from core.urls import BASE_URL_V1
 from .types import GenreDict, GenreCreateDict, MoviesByGenresDict
 
 
 class GenreRepository(BaseRepository):
     def __init__(self):
-        self._genres_url = BASE_URL_V1 + 'genres/'
-        self._movies_by_genres_url = BASE_URL_V1 + 'movies/movies-by-genres/'
-        self._headers = {
-            'Authorization': f'Bearer {st.session_state.token}'
-        }
+        super().__init__()
+        self._genres_url = self._base_url + 'genres/'
+        self._movies_by_genres_url = self._base_url + 'movies/movies-by-genres/'
 
     def get_genres(self) -> GenreDict:
         response = requests.get(
@@ -36,7 +32,7 @@ class GenreRepository(BaseRepository):
         return self._handle_response(
             response=response,
             expected_status=HTTPStatus.CREATED,
-            error_message='Get data error',
+            error_message='Error on creation',
         )
 
     def get_movies_by_genres(self) -> MoviesByGenresDict:
