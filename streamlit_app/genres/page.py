@@ -24,7 +24,7 @@ class GenrePage(base_page.Page):
             expander = st.expander(genre.title())
 
             if not movies:
-                expander.info(GenreTexts.warning_inexistent_movie)
+                expander.warning(GenreTexts.warning_inexistent_movie)
             else:
                 for movie in sorted(movies):
                     expander.info(movie)
