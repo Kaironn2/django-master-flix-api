@@ -41,23 +41,24 @@ class ActorPage(base_page.Page):
         with col2:
             nationality = st.text_input('Nacionalidade', placeholder='Digite o nome do ator...')
 
-        col_btn1, col_btn2, col_btn3 = st.columns([0.1, 0.1, 0.8])
+        filtered_actors = [
+            actor for actor in actors
+            if (actor_name.lower() in actor['name'].lower())
+            and (nationality.lower() in actor['nationality_name'].lower())
+        ]
 
+        col_btn1, col_btn2, col_btn3 = st.columns([0.1, 0.1, 1.3])
         with col_btn1:
-            if st.button('Adicionar'):
-                self._create_actor_dialog()
-
-        with col_btn2:
             if st.button('Filtrar'):
-                filtered_actors = [
-                    actor for actor in actors
-                    if (actor_name.lower() in actor['name'].lower())
-                    and (nationality.lower() in actor['nationality_name'].lower())
-                ]
-                self._actors_list(actors=filtered_actors)
-                return
+                st.rerun()
+        with col_btn2:
+            self._create_actor_button()
 
-        self._actors_list(actors=actors)
+        self._actors_list(actors=filtered_actors)
+
+    def _create_actor_button(self) -> None:
+        if st.button('Adicionar'):
+            self._create_actor_dialog()
 
     @st.dialog('Adicionar ator')
     def _create_actor_dialog(self):
@@ -66,7 +67,12 @@ class ActorPage(base_page.Page):
         nationality_names = [n['name'] for n in self.nationalities]
         nationality_name = st.selectbox('Nacionalidade', nationality_names)
 
-        birthday = st.date_input('Data de nascimento', format='DD/MM/YYYY')
+        birthday = st.date_input(
+            'Data de nascimento',
+            format='DD/MM/YYYY',
+            min_value=datetime(1600, 1, 1),
+            max_value=datetime.today()
+        )
 
         if st.button('Confirmar'):
             nationality_id = next(
@@ -77,7 +83,7 @@ class ActorPage(base_page.Page):
                 birthday=birthday.strftime('%Y-%m-%d'),
                 nationality=nationality_id
             )
-            st.success('Ator criado com sucesso!')
+            st.success(ActorTexts.sucess_actor_created)
             st.rerun()
 
     @property

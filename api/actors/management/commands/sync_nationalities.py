@@ -11,7 +11,7 @@ class Command(BaseCommand):
         countries = get_nationalities()
 
         for country in countries:
-            Nationality.objects.get_or_create(name=country)
+            Nationality.objects.get_or_create(name=country.title())
         self.stdout.write(
             self.style.SUCCESS('Nationalities synced successfully.')
         )
