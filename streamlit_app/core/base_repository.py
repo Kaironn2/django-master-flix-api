@@ -35,9 +35,9 @@ class BaseRepository:
     def _handle_create(
             self, url: str, data: Dict[str, Any],
             expected_status: HTTPStatus = HTTPStatus.CREATED, 
-            error_message: str = 'Get data error'
+            error_message: str = 'Error on create'
     ) -> Optional[Any]:
-        response = requests.get(
+        response = requests.post(
             url=url,
             headers=self._headers,
             data=data

@@ -16,12 +16,14 @@ class MovieService:
         self,
         title: str,
         actors: List[int],
+        genre: int,
         release_date: datetime,
         description: str,
     ) -> Optional[Any]:
         movie = dict(
             title=title,
             actors=actors,
+            genre=genre,
             release_date=release_date,
             description=description,
         )
