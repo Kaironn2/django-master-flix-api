@@ -1,7 +1,7 @@
 from typing import Any, List, Optional
 
 from core.base_repository import BaseRepository
-from .types import MovieCreateDict, MovieDict
+from core.types import MovieCreateDict, MovieDict
 
 
 class MovieRepository(BaseRepository):

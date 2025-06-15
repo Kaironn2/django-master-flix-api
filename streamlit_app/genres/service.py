@@ -1,8 +1,7 @@
 from typing import Any, Optional
 
+from core.types import GenreDict, MoviesByGenresDict
 from genres.repository import GenreRepository
-
-from .types import GenreDict, MoviesByGenresDict
 
 
 class GenreService:

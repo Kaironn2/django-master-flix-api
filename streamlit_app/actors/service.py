@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, List, Optional
 
-from .types import ActorDict, NationalityDict
+from core.types import ActorDict, NationalityDict
 from actors.repository import ActorRepository
 
 

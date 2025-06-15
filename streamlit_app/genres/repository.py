@@ -1,5 +1,5 @@
 from core.base_repository import BaseRepository
-from .types import GenreDict, GenreCreateDict, MoviesByGenresDict
+from core.types import GenreDict, GenreCreateDict, MoviesByGenresDict
 
 
 class GenreRepository(BaseRepository):

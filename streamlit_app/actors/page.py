@@ -4,9 +4,9 @@ from typing import List
 import streamlit as st
 
 from core import base_page
+from core.types import ActorDict, NationalityDict
 from .service import ActorService
 from .texts import ActorTexts
-from .types import ActorDict, NationalityDict
 
 
 class ActorPage(base_page.Page):

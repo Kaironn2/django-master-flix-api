@@ -1,9 +1,8 @@
 from datetime import datetime
 from typing import Any, List, Optional
 
+from core.types import MovieDict
 from movies.repository import MovieRepository
-
-from .types import MovieDict
 
 
 class MovieService:
@@ -11,7 +10,7 @@ class MovieService:
         self.movie_repository = MovieRepository()
 
     def get_movies(self) -> MovieDict:
-        return self.movie_repository.get_genres()
+        return self.movie_repository.get_movies()
 
     def create_movie(
         self,
