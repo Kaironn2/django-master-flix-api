@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, TypedDict
+from typing import List, Literal, TypedDict
 
 
 class GenreCreateDict(TypedDict):
@@ -19,7 +19,7 @@ class MovieCreateDict(TypedDict):
 
 class MovieDict(MovieCreateDict):
     id: int
-
+    rate: float | None
 
 class MoviesByGenresDict(TypedDict):
     id: int
@@ -39,3 +39,13 @@ class ActorDict(TypedDict):
 class NationalityDict(TypedDict):
     id: int
     name: str
+
+
+class ReviewCreateDict(TypedDict):
+    movie: int
+    stars: int
+    comment: str
+
+
+class ReviewDict(ReviewCreateDict):
+    id: int

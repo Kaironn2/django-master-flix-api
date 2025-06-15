@@ -27,7 +27,7 @@ class MoviePage(base_page.Page):
 
     def _movies_list(self, filtered_movies: MovieDict) -> None:
         self._movies_header()
-        col1, col2, col3, col4 = st.columns([0.2, 0.2, 0.2, 0.2])
+        col1, col2, col3, col4, col5 = st.columns([0.2, 0.2, 0.2, 0.2, 0.2])
         for movie in filtered_movies:
             with col1:
                 st.write(movie['title'])
@@ -36,18 +36,18 @@ class MoviePage(base_page.Page):
             with col3:
                 st.write(movie['genre']['name'])
             with col4:
+                st.write(str(movie['rate'])) if movie['rate'] else st.write('Sem avaliações')
+            with col5:
                 st.write(movie['description'])
 
     def _movies_header(self) -> None:
-        col1, col2, col3, col4 = st.columns([0.2, 0.2, 0.2, 0.2])
-        with col1:
-            st.subheader('Título')
-        with col2:
-            st.subheader('Data de Lançamento')
-        with col3:
-            st.subheader('Gênero')
-        with col4:
-            st.subheader('Descrição')
+        subheaders = [
+            'Título', 'Data de Lançamento', 'Gênero', 'Avaliação', 'Descrição'
+        ]
+        columns = st.columns([0.2, 0.2, 0.2, 0.2, 0.2])
+        for i, col in enumerate(columns):
+            with col:
+                st.subheader(subheaders[i])
 
     def _create_movies_button(self) -> None:
         if st.button('Adicionar'):
@@ -55,11 +55,11 @@ class MoviePage(base_page.Page):
 
     @st.dialog('Adicionar filme')
     def _create_movie_dialog(self) -> None:
-        actor_names = [actor['name'] for actor in self.actors]
-        genre_names = [genre['name'] for genre in self.genres]
+        actor_names = {actor['name']: actor['id'] for actor in self.actors}
+        genre_names = {actor['name']: actor['id'] for actor in self.genres}
 
         title = st.text_input('Título do filme')
-        selected_genre = st.selectbox('Gênero', genre_names)
+        selected_genre = st.selectbox('Gênero', genre_names.keys())
         description = st.text_input('Descrição')
         release_date = st.date_input(
             'Data de lançamento',
@@ -67,17 +67,10 @@ class MoviePage(base_page.Page):
             min_value=datetime(1600, 1, 1),
             max_value=datetime.today()
         )
-        selected_actors = st.multiselect('Atores', actor_names)
+        selected_actors = st.multiselect('Atores', actor_names.keys())
 
-        genre_id = [
-            genre['id'] for genre in self.genres
-            if genre['name'] in selected_genre
-        ]
-
-        selected_ids = [
-            actor['id'] for actor in self.actors
-            if actor['name'] in selected_actors
-        ]
+        actors_ids = [actor_names[name] for name in selected_actors]
+        genre_id = genre_names[selected_genre]
 
         if st.button('Confirmar'):
             if not all([title, release_date, selected_actors]):
@@ -88,7 +81,7 @@ class MoviePage(base_page.Page):
                     genre=genre_id,
                     description=description,
                     release_date=release_date,
-                    actors=selected_ids,
+                    actors=actors_ids,
                 )
                 st.rerun()
                 st.success('Ator salvo com sucesso!')
