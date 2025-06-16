@@ -1,6 +1,7 @@
 from datetime import datetime
-import json
 from typing import Any, List, Optional
+
+import streamlit as st
 
 from core.types import MovieDict
 from movies.repository import MovieRepository, MovieStatsDict
@@ -11,7 +12,11 @@ class MovieService:
         self.movie_repository = MovieRepository()
 
     def get_movies(self) -> MovieDict:
-        return self.movie_repository.get_movies()
+        if 'movies' in st.session_state:
+            return st.session_state.movies
+        movies = self.movie_repository.get_movies()
+        st.session_state.movies = movies
+        return movies
 
     def create_movie(
         self,
@@ -28,8 +33,13 @@ class MovieService:
             release_date=release_date,
             description=description,
         )
-        print(json.dumps(movie, indent=2, ensure_ascii=False, default=str))
-        return self.movie_repository.create_movie(movie=movie)
+        new_movie = self.movie_repository.create_movie(movie=movie)
+        st.session_state.movies.append(new_movie)
+        return new_movie
 
     def get_movie_stats(self) -> MovieStatsDict:
-        return self.movie_repository.get_movie_stats()
+        if 'movie_stats' in st.session_state:
+            return st.session_state.movie_stats
+        movie_stats = self.movie_repository.get_movie_stats()
+        st.session_state.movie_stats = movie_stats
+        return movie_stats
