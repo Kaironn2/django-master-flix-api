@@ -49,3 +49,10 @@ class ReviewCreateDict(TypedDict):
 
 class ReviewDict(ReviewCreateDict):
     id: int
+
+
+class MovieStatsDict(TypedDict):
+    total_movies = int
+    movies_by_genre = List[int]
+    total_reviews = int
+    average_rate = float

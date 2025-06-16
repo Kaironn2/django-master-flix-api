@@ -1,8 +1,9 @@
 from datetime import datetime
+import json
 from typing import Any, List, Optional
 
 from core.types import MovieDict
-from movies.repository import MovieRepository
+from movies.repository import MovieRepository, MovieStatsDict
 
 
 class MovieService:
@@ -27,4 +28,8 @@ class MovieService:
             release_date=release_date,
             description=description,
         )
+        print(json.dumps(movie, indent=2, ensure_ascii=False, default=str))
         return self.movie_repository.create_movie(movie=movie)
+
+    def get_movie_stats(self) -> MovieStatsDict:
+        return self.movie_repository.get_movie_stats()

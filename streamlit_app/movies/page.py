@@ -23,7 +23,8 @@ class MoviePage(base_page.Page):
         st.header(texts.header)
         st.write(texts.description)
         self._create_movies_button()
-        self._movies_list(self.movies)
+        with st.container(border=True):
+            self._movies_list(self.movies)
 
     def _movies_list(self, filtered_movies: MovieDict) -> None:
         self._movies_header()
@@ -32,7 +33,9 @@ class MoviePage(base_page.Page):
             with col1:
                 st.write(movie['title'])
             with col2:
-                st.write(movie['release_date'])
+                st.write(
+                    datetime.strptime(movie['release_date'], '%Y-%m-%d').strftime('%d/%m/%Y')
+                )
             with col3:
                 st.write(movie['genre']['name'])
             with col4:

@@ -21,19 +21,20 @@ class ActorPage(base_page.Page):
         self._filters()
 
     def _actors_list(self, actors: List[ActorDict]) -> None:
-        self._actors_subheader()
-        col1, col2, col3 = st.columns([0.3, 0.3, 0.3])
-        for actor in actors:
-            name = actor['name']
-            birthday = datetime.strptime(actor['birthday'], '%Y-%m-%d').strftime('%d/%m/%Y')
-            nationality = actor['nationality_name']
+        with st.container(border=True):
+            self._actors_subheader()
+            col1, col2, col3 = st.columns([0.3, 0.3, 0.3])
+            for actor in actors:
+                name = actor['name']
+                birthday = datetime.strptime(actor['birthday'], '%Y-%m-%d').strftime('%d/%m/%Y')
+                nationality = actor['nationality_name']
 
-            with col1:
-                st.write(name)
-            with col2:
-                st.write(birthday)
-            with col3:
-                st.write(nationality)
+                with col1:
+                    st.write(name)
+                with col2:
+                    st.write(birthday)
+                with col3:
+                    st.write(nationality)
 
     def _actors_subheader(self) -> None:
         col1, col2, col3 = st.columns([0.3, 0.3, 0.3])
